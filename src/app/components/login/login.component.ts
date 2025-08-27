@@ -31,8 +31,16 @@ export class LoginComponent {
       const { Email, Password } = this.loginForm.value;
       this.usersService.login(Email, Password).subscribe({
         next: (response: AuthenticationResponse) => {
-          this.usersService.setAuthStatus(response.token, response.personName);
-          this.router.navigate(['products', 'showcase']);
+          if (response.userID == "admin_id") {
+            //admin user
+            this.usersService.setAuthStatus(response.token, true, response.personName);
+            this.router.navigate(['admin', 'products']);
+          }
+          else {
+            //normal user
+            this.usersService.setAuthStatus(response.token, false, response.personName);
+            this.router.navigate(['products', 'showcase']);
+          }
         },
         error: (error: any) => {
           console.log(error);
@@ -41,13 +49,11 @@ export class LoginComponent {
     }
   }
 
-  get emailFormControl(): FormControl
-  {
+  get emailFormControl(): FormControl {
     return this.loginForm.get('Email') as FormControl;
   }
 
-  get passwordFormControl(): FormControl
-  {
+  get passwordFormControl(): FormControl {
     return this.loginForm.get('Password') as FormControl;
   }
 }

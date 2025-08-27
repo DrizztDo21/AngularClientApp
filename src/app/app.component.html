@@ -6,16 +6,27 @@
       <span class="e-commerce-title">e-Commerce</span>
     </div>
 
+    <a mat-button [routerLink]="['/products', 'showcase']" class="side-bar-button" routerLinkActive="active-link">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+
     <a mat-button [routerLink]="['/cart']" class="side-bar-button" routerLinkActive="active-link"
-      *ngIf="usersService.isAuthenticated">
+      *ngIf="usersService.isAuthenticated && usersService.isAdmin == false">
       <mat-icon>shopping_cart</mat-icon>
       <span>Cart</span>
     </a>
 
     <a mat-button [routerLink]="['/orders']" class="side-bar-button" routerLinkActive="active-link"
-      *ngIf="usersService.isAuthenticated">
+      *ngIf="usersService.isAuthenticated && usersService.isAdmin == false">
       <mat-icon>bookmark_border</mat-icon>
       <span>Orders</span>
+    </a>
+
+    <a mat-button [routerLink]="['/admin', 'products']" class="side-bar-button" routerLinkActive="active-link"
+      *ngIf="usersService.isAuthenticated && usersService.isAdmin">
+      <mat-icon>folder</mat-icon>
+      <span>Products</span>
     </a>
 
     <span class="spacer"></span>
@@ -29,10 +40,10 @@
     <mat-toolbar class="top-bar">
       <div></div>
       <span class="spacer"></span>
-      <form id="search-form">
+      <form id="search-form" [formGroup]="searchForm" (ngSubmit)="search()">
         <div class="search-wrapper">
           <div class="search-box">
-            <input id="searchText" type="search" name="searchText" placeholder="Search" />
+            <input id="searchText" type="search" name="searchText" placeholder="Search" formControlName="searchStr" />
             <button id="searchButton" type="submit" name="searchButton">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="#666666"
