@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   register(register: Register): Observable<AuthenticationResponse> {
-    return this.http.post<AuthenticationResponse>(`${this.usersAPIURL}auth/register`, register);
+    return this.http.post<AuthenticationResponse>(`${this.usersAPIURL}Auth/register`, register);
   }
 
   login(email: string, password: string): Observable<AuthenticationResponse> {
@@ -44,7 +44,7 @@ export class UsersService {
 
       return of(adminUser);
     } else {
-      return this.http.post<AuthenticationResponse>(`${this.usersAPIURL}auth/login`, { email, password });
+      return this.http.post<AuthenticationResponse>(`${this.usersAPIURL}Auth/login`, { email, password });
     }
   }
 
